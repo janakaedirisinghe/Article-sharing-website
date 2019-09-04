@@ -1,6 +1,7 @@
 <?php require_once('connection.php') ?>
 <?php require_once('header.php') ?>
-<?php session_start(); ?>
+<?php require_once('admin-check.php') ?>
+
 <?php 
 	
 
