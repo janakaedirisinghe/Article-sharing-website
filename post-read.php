@@ -1,3 +1,5 @@
+
+<?php require_once('main-header.php') ?>
 <?php 
 		$myfile = fopen("counter.txt", "r") or die("Unable to open file!");
 		$count= fgets($myfile);
@@ -24,7 +26,10 @@
 <html>
 <head>
 	<title>Post Share App</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	
 </head>
 <body>
 	<div class="container">
@@ -58,16 +63,22 @@
 
 					<?php 
 					$id =  $row['id'];
-						$query = "SELECT comment.comment_content,users.user_name,comment.comment_date FROM comment,users 
+						$query = "SELECT comment.id,comment.comment_content,users.user_name,comment.comment_date FROM comment,users 
 						WHERE comment.post_id = $id AND comment.user_id = users.user_id";
 
 						$result = mysqli_query($connect,$query);
 						while ($row = mysqli_fetch_assoc($result)) {
 							?>
 								<div style="border-left: solid  ;border-color: green;padding-left: 8px;">
-									<h6><?php echo $row['user_name'] ?></h6>
+									<h6><?php echo $row['user_name'] ?> - <small style="color: gray"><?php echo $row['comment_date']; ?></small> </h6>
 									<p style="padding-left: 10px;"><?php echo $row['comment_content'] ?></p>
-									<small style="color: gray"><?php echo $row['comment_date']; ?></small>
+									
+									<?php if ($row['user_name'] == $_SESSION['user_name']) {
+										$comment_id = $row['id'];
+										echo "<a href='comment-delete.php?post_id=$post_id&comment_id=$comment_id' class='badge badge-danger'>Delete</a> ";
+
+										echo "<a  data-toggle='modal' data-target='#exampleModal' class='badge badge-success'>Update</a>";
+									} ?>
 								</div><br>
 
 
@@ -101,7 +112,8 @@
 		</div>
 	</div>
 	<br>
-	
+
+
 
 </body>
 </html>
