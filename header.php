@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div class="container">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 				  <a class="navbar-brand" href="admin-home.php">Admin Area</a>
 				  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 				    <span class="navbar-toggler-icon"></span>
@@ -19,11 +19,11 @@
 				      <li class="nav-item">
 				        <a class="nav-link" href="post-add.php">Insert Post</a>
 				      </li>
-				      <li class="nav-item">
-				        <a class="nav-link" href="admin-logout.php">Logout</a>
+				      <li class="nav-item" style="padding-right: 0;">
+				        <a style="" class="nav-link" href="admin-logout.php">Logout</a>
 				      </li>
 				      <li class="nav-item">
-				        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+				        <!--<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
 				      </li>
 				    </ul>
 				  </div>
