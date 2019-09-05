@@ -1,0 +1,409 @@
+<div class="row" ng-controller="profileController">
+
+    <!-- profile upload wrapper -->
+    <div id="profileUploadWrapper" class="profile-upload-wrapper display-none">
+        <div class="upload-wrapper">
+            <div class="m-close-btn uploadImageWrapper" ng-click="closeProfileUploadPage();">
+                <i class="material-icons"></i>
+            </div>
+
+            <form>
+
+                <div class="img-upload-input">
+                    <div ng-show="!myImage">
+                        <div class="upload-profile-img">Choose image file</div>
+                        <input type="file" id="fileInput"/>
+                    </div>
+                </div>
+
+
+                <div class="cropArea" ng-show="myImage">
+                    <img-crop image="myImage" result-image="myCroppedImage"></img-crop>
+                </div>
+
+                <!--<div>Cropped Image:</div>-->
+                <!--<div><img ng-src="{{myCroppedImage}}"/></div>-->
+                <div id="uploadImageWrapper" class="footer-wrapper uploadImageWrapper" ng-show="myImage">
+                    <button ng-click="deleteUploadImg()"
+                            class="btn btn-transparent-border ">
+                        DELETE
+                    </button>
+                    <button ng-click="setProfileImageWrapper()"
+                            class="btn btn-transperant">
+                        LIKE IT
+                    </button>
+                </div>
+            </form>
+
+        </div>
+
+
+    </div>
+    <div class="col-lg-4">
+        <div class="ch-o-left-wrapper m-customer-wrapper profile-wrp">
+
+            <div class="profile-avatar">
+                <div class="img-wrp">
+                    <div class="profile-avatar">
+                        <img ng-show="CurrentProfile.isProfileAvatar" width="100" height="100"
+                             alt="profile image thewall" align="middle" class=""
+                             ng-src="{{CurrentProfile.ProfileAvatar200x200}}"
+                             src="assets/img/default_200x200.png">
+
+                        <div class="clearfix"></div>
+                        <div ng-show="!CurrentProfile.isProfileAvatar"
+                             class="profile-avatar-character lg-txt ">
+                            {{CurrentProfile.FirstName | limitTo:1 }}
+                        </div>
+                    </div>
+                    <div ng-click="editProfile();" class="edit-prf-wrp">
+                        Edit
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- profile menu start here -->
+            <div class="profile-menu-wrapper">
+
+
+                <div class="p-menu-flex">
+                    <div class="p-menu active"
+                         ng-click="profileSettingMenu('personal')"
+                         id="personal">
+                        <div class="icon">
+                            <i class="material-icons">assignment_ind</i>
+                        </div>
+                        <div class="title">
+
+                            Personal details
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-menu-flex">
+                    <div class="p-menu "
+                         ng-click="profileSettingMenu('security')"
+                         id="security">
+                        <div class="icon">
+                            <i class="material-icons">vpn_key</i>
+                        </div>
+                        <div class="title">
+
+                            Security
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="p-menu-flex"
+                     ng-show="accessLevel==1 || accessLevel==2 ">
+                    <div class="p-menu"
+                         ng-click="profileSettingMenu('payment')"
+                         id="payment">
+                        <div class="icon">
+                            <i class="material-icons">credit_card</i>
+                        </div>
+                        <div class="title">
+                            Payment
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="p-menu-flex">-->
+                    <!--<div class="p-menu"-->
+                         <!--ng-show="accessLevel==1 || accessLevel==2 "-->
+                         <!--ng-click="profileSettingMenu('fashion')"-->
+                         <!--id="fashion">-->
+                        <!--<div class="icon">-->
+                            <!--<i class="material-icons">card_giftcard</i>-->
+                        <!--</div>-->
+                        <!--<div class="title">-->
+                            <!--My fashion-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="p-menu-flex">-->
+                    <!--<div class="p-menu"-->
+                         <!--ng-show="accessLevel==1 || accessLevel==2 "-->
+                         <!--ng-click="profileSettingMenu('history')"-->
+                         <!--id="history">-->
+                        <!--<div class="icon">-->
+                            <!--<i class="material-icons">history</i>-->
+                        <!--</div>-->
+                        <!--<div class="title">-->
+                            <!--History-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="ch-o-left-wrapper m-customer-wrapper">
+            <div class="header-wrp">
+                <h1 style="padding-top: 5px;">{{windowTitle}}</h1>
+
+                <div class="header-back-wrapper" style="top: 22px;right: 18px;">
+                    <button type="button" ng-click="onClickClientLogOut();"
+                            class="btn btn-transparent-border">Logout
+                    </button>
+                </div>
+
+            </div>
+
+
+            <!-- profile details -->
+            <div id="personalview" class="profile-body-wrapper  ">
+
+                <div class="p-details-wrapper">
+
+
+                    <div class="form-wrapper-lg">
+                        <form name="fromPersonal" novalidate>
+                            <div class="form-group">
+                                <div class="form-flex">
+                                    <div class="f-flex"
+                                         ng-class="{ 'has-error' : fromPersonal.firstName.$invalid && !fromPersonal.firstName.$pristine }">
+                                        <label for="firstName">First Name *</label>
+                                        <input type="text"
+                                               required
+                                               class="form-control lg"
+                                               id="firstName"
+                                               name="firstName"
+                                               ng-model="CurrentProfile.FirstName"
+                                               aria-describedby="userFullName"
+                                               placeholder="ex : joni">
+                                    </div>
+                                    <div class="f-flex"
+                                         ng-class="{ 'has-error' : fromPersonal.lastname.$invalid && !frmPersonal.lastname.$pristine }">
+                                        <label for="firstName">First Name *</label>
+                                        <input type="text"
+                                               required
+                                               class="form-control lg"
+                                               id="lastname"
+                                               name="lastname"
+                                               ng-model="CurrentProfile.LastName"
+                                               aria-describedby="userFullName"
+                                               placeholder="ex : joni">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-flex">
+                                    <div class="f-flex"
+                                         ng-class="{ 'has-error' : fromPersonal.address.$invalid && !fromPersonal.address.$pristine }">
+                                        <label for="address">Address *</label>
+                                        <input type="text"
+                                               required
+                                               class="form-control lg"
+                                               id="address"
+                                               name="address"
+                                               aria-describedby="address"
+                                               ng-model="CurrentProfile.Address1"
+                                               placeholder="Ex : No 145 Dowa Badulla">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="location-wrapper">
+                                <div class="form-flex">
+                                    <div class="f-flex">
+                                        <div class="location-v-wrp">
+                                            <div id="map_canvas">
+                                                <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+                                                    <ui-gmap-marker coords='map.center'
+                                                                    idKey='map.zoom'></ui-gmap-marker>
+                                                </ui-gmap-google-map>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="form-flex">
+                                    <div class="f-flex"
+                                         ng-class="{ 'has-error' : fromPersonal.userName.$invalid && !fromPersonal.userName.$pristine }">
+                                        <label for="UserName">Email *</label>
+                                        <input type="email"
+                                               required
+                                               class="form-control lg"
+                                               id="UserName"
+                                               name="userName"
+                                               aria-describedby="userNameLogin"
+                                               ng-model="CurrentProfile.UserName"
+                                               placeholder="Ex : user@thewall.lk">
+                                    </div>
+
+                                    <div class="f-flex">
+                                        <label for="address">User Key (Read only)</label>
+                                        <input type="email" class="form-control lg"
+                                               id="userKey"
+                                               disabled
+                                               aria-describedby="userId"
+                                               ng-model="CurrentProfile.UserId"
+                                               placeholder="xxxx">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-flex">
+                                    <div class="f-flex"
+                                         ng-class="{ 'has-error' : fromPersonal.contactNo.$invalid && !fromPersonal.contactNo.$pristine }">
+                                        <label for="contactNo">Contact No (+94) *</label>
+                                        <input type="text"
+                                               required
+                                               class="form-control lg"
+                                               id="contactNo"
+                                               name="contactNo"
+                                               aria-describedby="address"
+                                               maxlength="9"
+                                               minlength="9"
+                                               ng-model="CurrentProfile.ContactNo"
+                                               placeholder="715986461">
+                                    </div>
+
+                                    <div class="f-flex">
+                                        <label for="address">Account Type</label>
+                                        <input type="text" class="form-control lg"
+                                               id="accountType"
+                                               disabled
+                                               aria-describedby="address"
+                                               ng-model="CurrentProfile.UserTypeId"
+                                               placeholder="Commercial ">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="form-flex">
+                                    <div class="f-flex">
+                                        <button ng-click="profileDetailsUpdate()"
+                                                type="button"
+                                                ng-disabled="fromPersonal.$invalid"
+                                                class="btn btn-black-lg btn-block">Update
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- security details -->
+            <div id="securityview" class="profile-body-wrapper display-none">
+                <div class="p-details-wrapper">
+                    <div class="form-wrapper-lg">
+                        <form name="frmSecurity">
+                            <div class="form-group"
+                                 ng-class="{ 'has-error' : frmSecurity.currentPassword.$invalid && !frmSecurity.currentPassword.$pristine }">
+                                <div class="form-flex">
+                                    <div class="f-flex">
+                                        <label for="currentPassword">Current password *</label>
+                                        <input type="password"
+                                               required=""
+                                               name="currentPassword"
+                                               class="form-control lg"
+                                               id="currentPassword"
+                                               ng-model="profileSecurity.currentPassword"
+                                               aria-describedby="Password"
+                                               placeholder="***************">
+                                    </div>
+                                    <div class="f-flex">
+                                        <label for="firstName"></label>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group"
+                                 ng-class="{ 'has-error' : frmSecurity.newPassword.$invalid && !frmSecurity.newPassword.$pristine }">
+                                <div class="form-flex">
+                                    <div class="f-flex">
+                                        <label for="address">New password*</label>
+                                        <input type="password"
+                                               required=""
+                                               class="form-control lg"
+                                               id="newPassword"
+                                               name="newPassword"
+                                               aria-describedby="address"
+                                               ng-model="profileSecurity.newPassword"
+                                               placeholder="*************">
+                                    </div>
+
+                                    <div class="f-flex">
+                                        <label for="address">Confirm password *</label>
+                                        <input type="password"
+                                               required
+                                               class="form-control lg"
+                                               id="confirmPassword"
+                                               aria-describedby="confirm password"
+                                               ng-model="profileSecurity.confirmPassword"
+                                               placeholder="*************">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="form-flex">
+                                    <div class="f-flex">
+                                        <button ng-click="clickLogin()"
+                                                type="button"
+                                                ng-disabled="frmSecurity.$invalid"
+                                                class="btn btn-black-lg btn-block">Update
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- payment details -->
+            <div id="paymentview" style="padding-right: 20px;" class="profile-body-wrapper display-none">
+
+                <div ng-show="isLoadingGetPaymentProcess==true"
+                     class="load-wrapper customer-list">
+                    <div class="spinner" style="margin-top: 50px">
+                        <div class="double-bounce1"></div>
+                        <div class="double-bounce2"></div>
+                    </div>
+                </div>
+
+                <div class="form-wrapper-lg">
+                    <div class="p-details-wrapper" ng-repeat="val in PaymentProcessList track by $index">
+                        <div class="payment-details-wrapper">
+                            <div class="customer-avatar">
+                                <div class="profile-avatar">
+                                    <img width="50" height="50" alt="profile image thewall" align="middle" class=""
+                                         ng-src="http://thewall.lk/assets/img/profile/200x200/{{val.ProfileAvatar}}">
+                                </div>
+                            </div>
+                            <div class="payment-details-row">
+                                {{val.FirstName}} {{val.LastName}}
+                            </div>
+
+                            <div class="payment-details-row payment-process">
+                                Payment Process
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
